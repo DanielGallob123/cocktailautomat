@@ -1,35 +1,43 @@
 #include <Arduino.h>
+#include <Bounce2.h> // mussten wir herunterladen
 
-int counter = 0;
+// Buttons an den Pins 2 und 3
+const int BTN_YELLOW = 2;
+const int BTN_BLUE = 3;
+// Leds
+const int LED_GREEN = 6;
+const int LED_PINK = 7;
+
+Bounce2::Button btnYellow = Bounce2::Button();
+Bounce2::Button btnBlue = Bounce2::Button();
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);  
 
+  pinMode(LED_GREEN, OUTPUT);
+  pinMode(LED_PINK, OUTPUT);
+
+  btnYellow.attach(BTN_YELLOW, INPUT_PULLUP);
+  btnYellow.setPressedState(LOW); // auf active low setzen
+
+  btnBlue.attach(BTN_BLUE, INPUT_PULLUP);
+  btnBlue.setPressedState(LOW); 
   
+
 }
 
 void loop() {
-  counter++;
+  btnYellow.update();
+  btnBlue.update();
 
-  if (counter % 3 == 0)
+  if (btnYellow.pressed())
   {
-    if (counter % 5 == 0)
-    {
-      Serial.println("FizzBuzz");
-    }
-    else{
-      Serial.println("Fizz");
-    }
+    digitalWrite(LED_GREEN, HIGH);
+    delay(2000);
+    digitalWrite(LED_GREEN, LOW);
   }
-  else {
-    if (counter % 5 == 0) {
-      Serial.println("Buzz");
-    }
-    else {
-      Serial.println(counter);
-    }
+  else if (btnBlue.pressed())
+  {
+    Serial.println("Blau gedrückt");
   }
-
-  delay(500);
 }
-
