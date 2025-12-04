@@ -32,9 +32,23 @@ void loop() {
 
   if (btnYellow.pressed())
   {
-    digitalWrite(LED_GREEN, HIGH);
-    delay(2000);
-    digitalWrite(LED_GREEN, LOW);
+    for(int i = 0; i < 9; i++)
+    {
+      digitalWrite(LED_PINK, HIGH);
+
+      if (i < 3 || (i >= 6 && i < 9))
+      {
+        delay(333);
+        digitalWrite(LED_PINK, LOW);
+        delay(333);
+      }
+      else if (i < 6)
+      {
+        delay(1000);
+        digitalWrite(LED_PINK, LOW);
+        delay(1000);
+      }
+    }
   }
   else if (btnBlue.pressed())
   {
